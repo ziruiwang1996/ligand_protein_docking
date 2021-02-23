@@ -19,7 +19,7 @@ def bcl_commands (line, slurmtxt, list_of_lines):
     bcl_com2 = '.sdf -conformers_single_file ../intermediate_files/bcl_outputs/'
     bcl_com3 = '_conformers.sdf\n'
     bcl_com4 = 'scontrol show job $SLURM_JOB_ID\njs -j $SLURM_JOB_ID\n'
-    #job text file content
+    
     list_of_lines[12] = 'cd ' + path1 + '\n'
     for ID in ligand_id_lst:
         list_of_lines[line] = bcl_com1 + ID + bcl_com2 + ID + bcl_com3
@@ -64,7 +64,7 @@ def concatenation_commands (line, slurmtxt, list_of_lines) :
     slurmtxt.writelines(list_of_lines)
     slurmtxt.close()
 
-answer = input ('New Ligands? (Y/N) ')
+answer = input ('Any New Ligands? (Y/N) ')
 if answer == 'Y' :
     bcl_commands (line, slurmtxt, list_of_lines)
     mol2params_commands (line, slurmtxt, list_of_lines)
