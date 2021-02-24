@@ -7,7 +7,7 @@ from os.path import isfile, join
 protein_id = input ('Enter Protein ID: ')
 pocket_n = input ('Enter Binding Pocket ID: ')
 
-path_to_ligand_input = '../inputs/Additional_sdfs_with_no_ZINC_IDs'
+path_to_ligand_input = '../inputs/ligand'
 file_names_with_suffix = [f for f in listdir(path_to_ligand_input) if isfile(join(path_to_ligand_input, f))]
 ligand_id_lst = []
 for each_name in file_names_with_suffix:
@@ -37,7 +37,6 @@ for each_id in ligand_id_lst:
     if not os.path.exists('../outputs/'+protein_id+'_raw/BP'+pocket_n+'/score_'+each_id+'.sc'):
         print('File Not Exist: ', each_id)
         continue
-
     os.mkdir(os.path.join('../outputs/'+protein_id+'/BP'+pocket_n, each_id))
     with open('../outputs/'+protein_id+'_raw/BP'+pocket_n+'/score_'+each_id+'.sc') as f:
         for jsonObj in f:
