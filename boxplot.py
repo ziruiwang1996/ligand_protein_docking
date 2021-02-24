@@ -81,6 +81,15 @@ plt.setp(ax1, xticks=[y + 1 for y in range(len(delta_lst))], xticklabels=labels)
 ax1.set_ylabel('Interface Delta Score (REU)', fontsize=8)
 ax1.xaxis.set_tick_params(labelsize=4, rotation=90)
 
+#un-text follwing 5 lines to switch to violin plot
+'''
+ax1 = plt.subplot(211)
+plt.violinplot(delta_lst_clean, showmeans=False, showmedians=True)
+plt.setp(ax1, xticks=[y + 1 for y in range(len(delta_lst))], xticklabels=labels)
+ax1.set_ylabel('Interface Delta Score (REU)', fontsize=8)
+ax1.xaxis.set_tick_params(labelsize=4, rotation=90)
+'''
+
 ax2 = plt.subplot(212)
 #plt.plot(labels, mean_lst, '-', label='Sample mean')
 plt.plot(labels, median_lst, '-', label='Sample median')
