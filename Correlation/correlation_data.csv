@@ -1,0 +1,8 @@
+Name,ID,EC50 (µM),Computational Binding Energy 
+Remdesivir,CID121304016,0.77,-12.111265
+Chloroquine,CID2719,1.13,-11.464621
+Ribavarin,CID451949,109.50,-10.019058
+Penciclovir,CID135398748,95.96,-12.100491
+Favipiravir,CID492405,61.88,-9.2939277
+Nitazoxanide,CID41684,2.12,-11.734952
+Nafamostat,CID4413,22.50,NA
