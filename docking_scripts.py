@@ -64,6 +64,38 @@ def small_protein ():
 def big_protein ():
     coordlst = list()
     lst1 = list(range(0,i)) #generating integer from 0 to i
+    #retrieving radii for specified spheres in each pocket
+    for num1 in lst1 :
+        lst2 = list(range(0,len(data[num1])))
+        pocketradiuslst = list()
+        for num2 in lst2:
+            pocketradius = float(data[num1][num2]['radius'])
+            if (4*math.pi*(pocketradius**3))/3 > 0.05*volumelst[num1]:  #5% of binding pocket volume
+                pocketradiuslst.append(pocketradius)
+        #print(sorted(pocketradiuslst, reverse = True))
+        coord_selected_lst = list()
+        for num2 in lst2:
+            for radius in sorted(pocketradiuslst, reverse = True):
+                if data[num1][num2]['radius'] == radius:
+                    coord = data[num1][num2]['center']
+                    if len(coord_selected_lst) == 0 :
+                        coord_selected_lst.append(coord)
+                    else:
+                        distance_lst = list()
+                        for each_coord in coord_selected_lst:
+                            x_difference = float(each_coord['x'])-float(coord['x'])
+                            y_difference = float(each_coord['y'])-float(coord['y'])
+                            z_difference = float(each_coord['z'])-float(coord['z'])
+                            distance = math.sqrt(x_difference**2 + y_difference**2 + z_difference**2)
+                            distance_lst.append(distance)
+                        if all(dis >= 2*float(radius) for dis in distance_lst): #check if all distances further than 2 times radius
+                            print(coord)
+                            coord_selected_lst.append(coord)
+        coordlst.append(coord_selected_lst)
+    return coordlst
+    ''' #old version
+    coordlst = list()
+    lst1 = list(range(0,i)) #generating integer from 0 to i
     #retrieving the largest radius for spheres in each pocket
     for num1 in lst1 :
         lst2 = list(range(0,len(data[num1])))
@@ -85,7 +117,7 @@ def big_protein ():
                     coordlst_each_pocket.append(sorted(coord.items()))
         for num3 in range(math.ceil(volumelst[num1]/2000)): # one coord/2000 volume
             coordlst.append(random.choice(coordlst_each_pocket)) #randomly selecting coord from coord pool
-    return coordlst
+    return coordlst'''
 
 protein_type = input('Protein Type: (big/small): ')
 if protein_type == 'big' :
@@ -96,22 +128,7 @@ else:
 for each_BP in range(0, len(coordlst)):
     if not os.path.exists('../outputs/'+protein_ID+'_raw/BP'+str(each_BP+1)):
         os.mkdir('../outputs/'+protein_ID+'_raw/BP'+str(each_BP+1))
-'''
-distance_dic = {}
-coor_frequency_count = {}
-for j in range(0, len(coordlst)-1):
-    for k in range(j+1, len(coordlst)):
-        x_difference = float(coordlst[j][0][1]) - float(coordlst[k][0][1])
-        y_difference = float(coordlst[j][1][1]) - float(coordlst[k][1][1])
-        z_difference = float(coordlst[j][2][1]) - float(coordlst[k][2][1])
-        distance = math.sqrt(x_difference**2 + y_difference**2 + z_difference**2)
-        if distance > 15:
-            coor_frequency_count[j] = coor_frequency_count.get(j, 0)+1
-            coor_frequency_count[k] = coor_frequency_count.get(k, 0)+1
-            distance_dic[distance] = (j,k)
-print(sorted(distance_dic.items())[-5:])
-print(sorted(coor_frequency_count.items()))
-'''
+
 
 path1 = input ('The path to ligand_protein_docking: ') #'/mnt/ufs18/home-007/wangzir2/ligand_protein_docking'
 path2 = 'rosetta_pakage/rosetta_3.12/main/source/bin/rosetta_scripts.static.linuxgccrelease'
