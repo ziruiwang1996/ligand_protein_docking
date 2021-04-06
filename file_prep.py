@@ -14,12 +14,12 @@ list_of_lines = slurmtxt.readlines()
 line = 13
 
 def bcl_commands (line, slurmtxt, list_of_lines):
-    path1 = input ('The path to bcl_pakage: ') #'/mnt/ufs18/home-007/wangzir2/ligand_protein_docking/bcl_pakage'
+    path1 = '../bcl_package'
     bcl_com1 = './bcl.exe molecule:ConformerGenerator -ensemble_filenames ../inputs/ligand/'
     bcl_com2 = '.sdf -conformers_single_file ../intermediate_files/bcl_outputs/'
     bcl_com3 = '_conformers.sdf\n'
     bcl_com4 = 'scontrol show job $SLURM_JOB_ID\njs -j $SLURM_JOB_ID\n'
-    
+
     list_of_lines[12] = 'cd ' + path1 + '\n'
     for ID in ligand_id_lst:
         list_of_lines[line] = bcl_com1 + ID + bcl_com2 + ID + bcl_com3
@@ -31,7 +31,7 @@ def bcl_commands (line, slurmtxt, list_of_lines):
     slurmtxt.close()
 
 def mol2params_commands (line, slurmtxt, list_of_lines):
-    path2 = input ('The path to mol2params_outputs: ') #'/mnt/ufs18/home-007/wangzir2/ligand_protein_docking/intermediate_files/mol2params_outputs'
+    path2 = '../intermediate_files/mol2params_outputs'
     path3 = '../../rosetta_pakage/rosetta_3.12/main/source/scripts/python/public/molfile_to_params.py'
     mol_com1 = ' --conformers-in-one-file ../bcl_outputs/'
     mol_com2 = "scontrol show job $SLURM_JOB_ID\njs -j $SLURM_JOB_ID\n"
@@ -47,7 +47,7 @@ def mol2params_commands (line, slurmtxt, list_of_lines):
     slurmtxt.close()
 
 def concatenation_commands (line, slurmtxt, list_of_lines) :
-    path4 = input ('The path to protein: ') #'/mnt/ufs18/home-007/wangzir2/ligand_protein_docking/inputs/protein'
+    path4 = '../inputs/protein'
     protein_ID = input ('Enter protein ID: ')
     protein_chain = input('Enter protein chain: ')
     cat_com1 = '.pdb ../../intermediate_files/mol2params_outputs/'
