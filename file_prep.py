@@ -1,3 +1,9 @@
+#This script generates bash scripts for docking input file preparation.
+#step1_BCL_job.txt: bash script that contains commands for ligands conformers generation
+#step2_mol2params_job.txt: bash script that contains commands to add partial charges
+#based on atom-type and additional structural information
+#step3_concatenation_job.txt: bash script that contains commands to concatenated
+#ligand.pdb and protein_cleaned.pdb
 import xlrd
 import sys
 from os import listdir
