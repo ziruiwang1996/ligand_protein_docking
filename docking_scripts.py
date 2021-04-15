@@ -1,3 +1,9 @@
+#This script generates bash script that contains all commands for computational
+#docking between target protein and ligands. It starts with extracting coordinates
+#from protein topographic data for each binding pockeet, then appending coordinates
+#to Rosetta docking XML, and finally generating options file and bash script.
+#Bash script will be in ligand_protein_docking/scripts, options and XML will be in
+#ligand_protein_docking/intermediate_files 
 import json
 import xml.etree.ElementTree as ET
 import os
