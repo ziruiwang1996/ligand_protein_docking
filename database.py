@@ -4,9 +4,6 @@ import json
 import sqlite3
 import pandas as pd
 
-conn = sqlite3.connect('screening_result.db')
-cur = conn.cursor()
-
 def ligand_table(conn):
     ligand_info = pd.read_excel('Ligand_Library.xlsx', header=0)
     ligand_info.to_sql('Ligand', conn, if_exists='append', index=False)
@@ -42,6 +39,8 @@ def score_table(conn):
                 values = (protein_id, ligand_id, scorefxn_id, score, pose)
                 cur.execute("INSERT INTO Score (protein_id, Ligand_id, Fxn_id, Score, Pose) VALUES (?,?,?,?,?);", values)
 
+conn = sqlite3.connect('screening_result.db')
+cur = conn.cursor()
 pdb_id = input("PDB ID: ")
 type = input("Protein Type: ")
 scorefxn_name = input("Score Function: ")
